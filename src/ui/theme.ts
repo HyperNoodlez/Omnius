@@ -9,7 +9,7 @@ export const colors = {
   warning: '#FFE66D',    // Warnings, important info
   purple: '#A855F7',     // Narrative text, character dialogue
   dim: '#6B7280',        // System messages, timestamps
-  white: '#FFFFFF',      // High-emphasis text, headers
+  white: '#C9D1D9',      // High-emphasis text, headers (readable on light & dark)
 
   // Status colors
   success: '#22C55E',
