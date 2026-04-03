@@ -21,6 +21,7 @@ export function TerminalScreen() {
   const addOutputEntry = useGameStore((s) => s.addOutputEntry);
   const addBehavioralEvent = useGameStore((s) => s.addBehavioralEvent);
   const endMission = useGameStore((s) => s.endMission);
+  const adminMode = useGameStore((s) => s.adminMode);
 
   const [commandDisabled, setCommandDisabled] = useState(false);
   const [pendingDecision, setPendingDecision] = useState<Decision | null>(null);
@@ -126,7 +127,12 @@ export function TerminalScreen() {
   useInput((input) => {
     if (!pendingDecision) return;
 
-    const num = parseInt(input);
+    // ADMIN: Space auto-picks first (optimal) option
+    let num = parseInt(input);
+    if (adminMode && input === ' ') {
+      const optimalIdx = pendingDecision.options.findIndex((o) => o.isOptimal);
+      num = (optimalIdx >= 0 ? optimalIdx : 0) + 1;
+    }
     if (num >= 1 && num <= pendingDecision.options.length) {
       const choice = pendingDecision.options[num - 1]!;
 
@@ -239,8 +245,8 @@ export function TerminalScreen() {
         paddingX={1}
         justifyContent="space-between"
       >
-        <Text color={colors.matrix} bold>
-          OP: {mission.meta.title.replace('Operation: ', '').toUpperCase()}
+        <Text color={colors.omnius} bold>
+          {adminMode ? '[ADMIN] ' : ''}OP: {mission.meta.title.replace('Operation: ', '').toUpperCase()}
         </Text>
         <Text color={colors.dim}>
           Phase: {missionState.phase.toUpperCase()}
@@ -276,7 +282,7 @@ export function TerminalScreen() {
                   : entry.type === 'alert'
                   ? colors.alert
                   : entry.type === 'evidence'
-                  ? colors.matrix
+                  ? colors.omnius
                   : entry.type === 'decision'
                   ? colors.warning
                   : entry.type === 'narrative'

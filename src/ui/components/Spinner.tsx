@@ -9,7 +9,7 @@ interface SpinnerProps {
   color?: string;
 }
 
-export function Spinner({ label, type = 'dots', color = colors.matrix }: SpinnerProps) {
+export function Spinner({ label, type = 'dots', color = colors.omnius }: SpinnerProps) {
   const spinner = cliSpinners[type];
   const [frame, setFrame] = useState(0);
 

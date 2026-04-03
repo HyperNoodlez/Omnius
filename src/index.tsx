@@ -1,4 +1,3 @@
-#!/usr/bin/env node
 import React from 'react';
 import { render } from 'ink';
 import { App } from './app.js';
@@ -11,6 +10,6 @@ const { waitUntilExit } = render(<App />);
 
 waitUntilExit().then(() => {
   process.stdout.write('\x1b[2J\x1b[H'); // Clear on exit
-  console.log('Connection terminated. Stay vigilant, Analyst.');
+  console.log('Connection terminated. Stay vigilant, Observer.');
   process.exit(0);
 });

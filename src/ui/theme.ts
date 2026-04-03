@@ -3,7 +3,7 @@ import chalk from 'chalk';
 // Omnius color palette
 export const colors = {
   // Primary colors
-  matrix: '#00FF41',     // OMNIUS system text, command output
+  omnius: '#FF8C00',     // OMNIUS system text, command output (orange)
   alert: '#FF6B6B',      // Threats, errors, critical alerts
   cyan: '#4ECDC4',       // Player input, interactive elements
   warning: '#FFE66D',    // Warnings, important info
@@ -24,7 +24,8 @@ export const colors = {
 // Styled text helpers
 export const style = {
   // Character/system prefixes
-  omnius: chalk.hex(colors.matrix).bold('[OMNIUS]'),
+  handler: chalk.hex(colors.white).bold('[HANDLER]'),
+  omnius: chalk.hex(colors.omnius).bold('[OMNIUS]'),
   director: chalk.hex(colors.purple).bold('[DIRECTOR VASQUEZ]'),
   kai: chalk.hex(colors.cyan).bold('[KAI]'),
   ren: chalk.hex(colors.warning).bold('[REN]'),
@@ -34,7 +35,7 @@ export const style = {
   // Text styles
   narrative: (text: string) => chalk.hex(colors.purple)(text),
   command: (text: string) => chalk.hex(colors.cyan)(text),
-  output: (text: string) => chalk.hex(colors.matrix)(text),
+  output: (text: string) => chalk.hex(colors.omnius)(text),
   error: (text: string) => chalk.hex(colors.alert)(text),
   warn: (text: string) => chalk.hex(colors.warning)(text),
   dimText: (text: string) => chalk.hex(colors.dim)(text),
@@ -42,7 +43,7 @@ export const style = {
   success: (text: string) => chalk.hex(colors.success)(text),
 
   // Special formatting
-  header: (text: string) => chalk.hex(colors.matrix).bold(text.toUpperCase()),
+  header: (text: string) => chalk.hex(colors.omnius).bold(text.toUpperCase()),
   subheader: (text: string) => chalk.hex(colors.cyan).underline(text),
   timestamp: (text: string) => chalk.hex(colors.dim)(`[${text}]`),
   evidence: (text: string) => chalk.hex(colors.warning).bold(`[EVIDENCE] ${text}`),
@@ -72,13 +73,15 @@ export const box = {
   dVertical: '║',
 } as const;
 
-// ASCII art for the title
-export const TITLE_ART = `
- ██████╗ ███╗   ███╗███╗   ██╗██╗██╗   ██╗███████╗
-██╔═══██╗████╗ ████║████╗  ██║██║██║   ██║██╔════╝
-██║   ██║██╔████╔██║██╔██╗ ██║██║██║   ██║███████╗
-██║   ██║██║╚██╔╝██║██║╚██╗██║██║██║   ██║╚════██║
-╚██████╔╝██║ ╚═╝ ██║██║ ╚████║██║╚██████╔╝███████║
- ╚═════╝ ╚═╝     ╚═╝╚═╝  ╚═══╝╚═╝ ╚═════╝ ╚══════╝`.trim();
+// Gradient block title art (░▒▓█ style — Hitman aesthetic)
+export const TITLE_ART = [
+  '░▒▓██████▓▒░░▒▓██████████████▓▒░░▒▓█▓▒░▒▓███████▓▒░░▒▓█▓▒░░▒▓█▓▒░░▒▓███████▓▒░',
+  '░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░',
+  '░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░',
+  '░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░░▒▓██████▓▒░',
+  '░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░      ░▒▓█▓▒░',
+  '░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░      ░▒▓█▓▒░',
+  ' ░▒▓██████▓▒░░▒▓█▓▒░░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░░▒▓██████▓▒░░▒▓███████▓▒░',
+];
 
-export const SUBTITLE = 'Operational Monitoring Network for Unified Intelligence and Security';
+export const SUBTITLE = 'D A T A   I N T E L L I G E N C E   D I V I S I O N   S E V E N';

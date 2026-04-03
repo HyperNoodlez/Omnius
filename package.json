@@ -1,14 +1,19 @@
 {
   "name": "omnius",
   "version": "0.1.0",
-  "description": "Terminal-based cybersecurity text adventure and aptitude assessment game",
+  "description": "DI7 — A terminal-based cybersecurity text adventure and aptitude assessment game",
   "type": "module",
   "bin": {
     "omnius": "./dist/index.js"
   },
+  "files": [
+    "dist",
+    "README.md"
+  ],
   "scripts": {
     "dev": "tsx src/index.tsx",
-    "build": "tsup src/index.tsx --format esm --dts",
+    "build": "tsup",
+    "prepublishOnly": "pnpm build",
     "test": "vitest",
     "lint": "eslint src/",
     "typecheck": "tsc --noEmit"
@@ -17,11 +22,22 @@
     "cybersecurity",
     "game",
     "terminal",
-    "assessment",
-    "cli"
+    "cli",
+    "security",
+    "training",
+    "ctf",
+    "di7",
+    "omnius"
   ],
-  "author": "Shiv Garge",
+  "author": "Shiv Garge <shiv@gargestudio.com>",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/shivgarge/omnius"
+  },
+  "engines": {
+    "node": ">=20"
+  },
   "packageManager": "pnpm@10.33.0",
   "dependencies": {
     "ansi-escapes": "^7.3.0",

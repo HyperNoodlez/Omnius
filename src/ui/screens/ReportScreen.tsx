@@ -26,7 +26,7 @@ export function ReportScreen() {
     return (
       <Box flexDirection="column" paddingX={2} paddingY={1}>
         <Box borderStyle="single" borderColor={colors.border} paddingX={1}>
-          <Text color={colors.matrix} bold>ASSESSMENT REPORT</Text>
+          <Text color={colors.omnius} bold>ASSESSMENT REPORT</Text>
         </Box>
         <Box marginY={2}>
           <Text color={colors.dim}>
@@ -52,7 +52,7 @@ export function ReportScreen() {
   // Role alignment
   const roleScores = [
     {
-      role: 'SOC Analyst',
+      role: 'SOC Observer',
       score: Math.round(
         (dimensions.analytical_rigor * 0.3 +
           dimensions.pattern_recognition * 0.3 +
@@ -88,9 +88,9 @@ export function ReportScreen() {
   return (
     <Box flexDirection="column" paddingX={2} paddingY={1}>
       {/* Header */}
-      <Box borderStyle="double" borderColor={colors.matrix} paddingX={1} flexDirection="column">
-        <Text color={colors.matrix} bold>
-          OMNIUS CYBERSECURITY APTITUDE REPORT
+      <Box borderStyle="double" borderColor={colors.omnius} paddingX={1} flexDirection="column">
+        <Text color={colors.omnius} bold>
+          DI7 — OBSERVER PERFORMANCE REPORT
         </Text>
         <Text color={colors.dim}>
           Missions Completed: {completedMissions.length} | Generated: {new Date().toLocaleDateString()}
@@ -99,7 +99,7 @@ export function ReportScreen() {
 
       {/* Radar chart (ASCII) */}
       <Box marginY={1} flexDirection="column" borderStyle="single" borderColor={colors.border} paddingX={1}>
-        <Text color={colors.white} bold>APTITUDE PROFILE</Text>
+        <Text color={colors.white} bold>OPERATIONAL PROFILE</Text>
         <Text> </Text>
         {ALL_DIMENSIONS.map((dim) => {
           const score = Math.round(dimensions[dim]);

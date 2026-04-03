@@ -5,11 +5,14 @@ import { immer } from 'zustand/middleware/immer';
 
 export type Screen =
   | 'title'
+  | 'tutorial'
   | 'hub'
   | 'mission-brief'
   | 'terminal'
   | 'debrief'
   | 'report'
+  | 'about'
+  | 'guide'
   | 'settings';
 
 export type AptitudeDimension =
@@ -89,6 +92,10 @@ export interface GameSettings {
 // ── Store ────────────────────────────────────────────
 
 interface GameStore {
+  // Admin
+  adminMode: boolean;
+  toggleAdmin: () => void;
+
   // Navigation
   screen: Screen;
   setScreen: (screen: Screen) => void;
@@ -98,6 +105,8 @@ interface GameStore {
   updateSettings: (settings: Partial<GameSettings>) => void;
 
   // Progress
+  tutorialCompleted: boolean;
+  orientationProgress: { currentChapter: number; completedChapters: string[] };
   completedMissions: string[];
   currentMissionId: string | null;
   missionStates: Record<string, MissionState>;
@@ -108,6 +117,8 @@ interface GameStore {
   behavioralEvents: BehavioralEvent[];
 
   // Actions
+  completeTutorial: () => void;
+  completeChapter: (chapterId: string) => void;
   startMission: (missionId: string) => void;
   endMission: (score: MissionScore) => void;
   updateMissionState: (missionId: string, updater: (state: MissionState) => void) => void;
@@ -130,17 +141,29 @@ const initialDimensions: Record<AptitudeDimension, number> = {
 export const useGameStore = create<GameStore>()(
   immer((set) => ({
     // Initial state
+    adminMode: false,
     screen: 'title',
     settings: {
       textSpeed: 'normal',
-      playerName: 'Analyst',
+      playerName: 'Observer',
     },
+    tutorialCompleted: false,
+    orientationProgress: { currentChapter: 0, completedChapters: [] },
     completedMissions: [],
     currentMissionId: null,
     missionStates: {},
     dimensions: { ...initialDimensions },
     missionScores: [],
     behavioralEvents: [],
+
+    // Admin — secret fast-forward mode for testing
+    toggleAdmin: () =>
+      set((state) => {
+        state.adminMode = !state.adminMode;
+        if (state.adminMode) {
+          state.settings.textSpeed = 'instant';
+        }
+      }),
 
     // Navigation
     setScreen: (screen) =>
@@ -152,6 +175,25 @@ export const useGameStore = create<GameStore>()(
     updateSettings: (newSettings) =>
       set((state) => {
         Object.assign(state.settings, newSettings);
+      }),
+
+    // Orientation
+    completeTutorial: () =>
+      set((state) => {
+        state.tutorialCompleted = true;
+        state.screen = 'hub';
+      }),
+
+    completeChapter: (chapterId) =>
+      set((state) => {
+        if (!state.orientationProgress.completedChapters.includes(chapterId)) {
+          state.orientationProgress.completedChapters.push(chapterId);
+        }
+        state.orientationProgress.currentChapter++;
+        // After completing chapter 3 (Tier 1), mark tutorial as done and unlock hub
+        if (state.orientationProgress.completedChapters.length >= 3) {
+          state.tutorialCompleted = true;
+        }
       }),
 
     // Mission lifecycle
@@ -217,6 +259,8 @@ export const useGameStore = create<GameStore>()(
     resetGame: () =>
       set((state) => {
         state.screen = 'title';
+        state.tutorialCompleted = false;
+        state.orientationProgress = { currentChapter: 0, completedChapters: [] };
         state.completedMissions = [];
         state.currentMissionId = null;
         state.missionStates = {};

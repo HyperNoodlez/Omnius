@@ -77,9 +77,9 @@ export function DebriefScreen() {
         </Box>
       </Box>
 
-      {/* Aptitude dimensions */}
+      {/* Operational dimensions */}
       <Box flexDirection="column" borderStyle="single" borderColor={colors.border} paddingX={1}>
-        <Text color={colors.white} bold>APTITUDE ASSESSMENT</Text>
+        <Text color={colors.white} bold>OPERATIONAL ASSESSMENT</Text>
         <Text> </Text>
 
         {dimensionEntries.map(([dim, score]) => {

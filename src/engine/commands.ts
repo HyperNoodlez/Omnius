@@ -1,5 +1,6 @@
 import type { MissionData, Evidence } from './missions.js';
 import type { MissionState } from './state.js';
+import { DETAILED_HELP } from './tutorial.js';
 
 // ── Command Parser ───────────────────────────────
 
@@ -42,6 +43,19 @@ export function executeCommand(
   mission: MissionData,
   missionState: MissionState
 ): CommandResult {
+  // Admin commands
+  if (parsed.name === 'admin-skip') {
+    // Discover all evidence at once
+    const undiscovered = mission.evidence
+      .filter((e) => !missionState.evidenceDiscovered.includes(e.id))
+      .map((e) => e.id);
+    return {
+      output: `[ADMIN] Discovered ${undiscovered.length} evidence items: ${undiscovered.join(', ')}`,
+      evidenceId: undiscovered[0], // will trigger one at a time, but admin can repeat
+      type: 'system',
+    };
+  }
+
   // Check if command is available in this mission
   if (!mission.availableCommands.includes(parsed.name) && !['help', 'status', 'hint', 'clear'].includes(parsed.name)) {
     return {
@@ -53,7 +67,7 @@ export function executeCommand(
   // Meta commands
   switch (parsed.name) {
     case 'help':
-      return handleHelp(mission);
+      return handleHelp(parsed, mission);
     case 'status':
       return handleStatus(mission, missionState);
     case 'hint':
@@ -134,8 +148,20 @@ function matchesDiscoveryCommand(parsed: ParsedCommand, pattern: string): boolea
   return true;
 }
 
-function handleHelp(mission: MissionData): CommandResult {
-  const cmds = mission.availableCommands;
+function handleHelp(parsed: ParsedCommand, mission: MissionData): CommandResult {
+  // Check for "help <command>" — detailed help
+  const targetCommand = parsed.args[0];
+  if (targetCommand && DETAILED_HELP[targetCommand]) {
+    return { output: DETAILED_HELP[targetCommand]!, type: 'system' };
+  }
+
+  if (targetCommand) {
+    return {
+      output: `No detailed help available for "${targetCommand}".\nAvailable: ${Object.keys(DETAILED_HELP).join(', ')}`,
+      type: 'error',
+    };
+  }
+
   const helpText = `═══ AVAILABLE COMMANDS ═══════════════════════════════
 
 INVESTIGATION:
@@ -158,9 +184,12 @@ COMMUNICATION:
 
 SYSTEM:
   help                                        Show this help
+  help <command>                              Detailed help for a command
   status                                      Mission status
   hint                                        Get a hint (affects score)
-  clear                                       Clear terminal output`;
+  clear                                       Clear terminal output
+
+Tip: Type "help logs" or "help whois" for detailed cybersecurity context.`;
 
   return { output: helpText, type: 'system' };
 }

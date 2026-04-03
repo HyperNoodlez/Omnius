@@ -15,7 +15,7 @@ export function ProgressBar({
   total,
   width = 20,
   label,
-  color = colors.matrix,
+  color = colors.omnius,
 }: ProgressBarProps) {
   const ratio = total > 0 ? Math.min(current / total, 1) : 0;
   const filled = Math.round(ratio * width);

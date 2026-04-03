@@ -37,6 +37,9 @@ export function HubScreen() {
     if (_input === 'r' || _input === 'R') {
       setScreen('report');
     }
+    if (_input === 'g' || _input === 'G') {
+      setScreen('guide');
+    }
     if (_input === 'q' || _input === 'Q') {
       process.exit(0);
     }
@@ -54,12 +57,12 @@ export function HubScreen() {
         paddingX={1}
         flexDirection="column"
       >
-        <Text color={colors.matrix} bold>
-          PANOPTICON GROUP — Secure Operations Center
+        <Text color={colors.omnius} bold>
+          DI7 — Data Intelligence Division // Secure Operations Center
         </Text>
         <Box justifyContent="space-between">
           <Text color={colors.dim}>
-            Analyst: <Text color={colors.cyan} bold>{playerName}</Text>
+            Observer: <Text color={colors.cyan} bold>{playerName}</Text>
           </Text>
           <Text color={colors.dim}>
             Threat Level: <Text color={colors.warning}>{threatBar}</Text>{' '}
@@ -71,14 +74,14 @@ export function HubScreen() {
       {/* OMNIUS greeting */}
       <Box marginY={1} flexDirection="column">
         <Text>
-          {style.omnius} Good morning, Analyst. {missions.length} situations
+          {style.omnius} Good morning, Observer. {missions.length} situations
           require your attention.
         </Text>
       </Box>
 
       {/* Mission list */}
       <Box flexDirection="column" marginY={1}>
-        <Text color={colors.matrix} bold>
+        <Text color={colors.omnius} bold>
           AVAILABLE MISSIONS:
         </Text>
         <Text> </Text>
@@ -124,7 +127,7 @@ export function HubScreen() {
       {/* Quick actions */}
       <Box marginTop={1} borderStyle="single" borderColor={colors.border} paddingX={1}>
         <Text color={colors.dim}>
-          ↑↓ Select Mission · Enter Launch · [R] Assessment Report · [Q] Quit
+          ↑↓ Select Mission · Enter Launch · [R] Report · [G] Guide · [Q] Quit
         </Text>
       </Box>
     </Box>

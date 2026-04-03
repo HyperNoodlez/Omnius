@@ -85,7 +85,7 @@ export function MissionBriefScreen() {
         <Text>{style.omnius}</Text>
         <Box marginTop={1} flexDirection="column">
           {mission.briefing.lines.slice(0, lineIndex + 1).map((line, i) => (
-            <Text key={i} color={line === '' ? undefined : colors.matrix}>
+            <Text key={i} color={line === '' ? undefined : colors.omnius}>
               {line === '' ? ' ' : line}
             </Text>
           ))}
