@@ -459,7 +459,7 @@ export function GuideScreen() {
 
   useInput((_input, key) => {
     if (key.return || key.escape) {
-      setScreen('hub');
+      setScreen('title');
     }
     if (key.upArrow) {
       setScrollOffset((s) => Math.max(0, s - 1));

@@ -7,7 +7,7 @@ import { AnimatedEyes } from '../components/AnimatedEyes.js';
 import { GlitchAssemble } from '../components/GlitchAssemble.js';
 import { FIGURE_ART } from '../assets/figure.js';
 
-type MenuOption = 'new' | 'continue' | 'orientation' | 'about' | 'quit';
+type MenuOption = 'new' | 'continue' | 'orientation' | 'about' | 'guide' | 'quit';
 type Phase = 'boot' | 'figure-reveal' | 'title' | 'menu';
 
 export function TitleScreen() {
@@ -60,6 +60,7 @@ export function TitleScreen() {
     { key: 'continue', label: 'CONTINUE', available: hasSave },
     { key: 'orientation', label: 'ORIENTATION', available: tutorialCompleted },
     { key: 'about', label: 'ABOUT DI7', available: true },
+    { key: 'guide', label: 'PRODUCT GUIDE', available: true },
     { key: 'quit', label: 'QUIT', available: true },
   ];
 
@@ -114,6 +115,9 @@ export function TitleScreen() {
           break;
         case 'about':
           setScreen('about');
+          break;
+        case 'guide':
+          setScreen('guide');
           break;
         case 'quit':
           process.exit(0);
